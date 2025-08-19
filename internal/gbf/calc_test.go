@@ -257,7 +257,7 @@ func TestGetWeaponTypeMultiplier(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			result, err := GetWeaponTypeMultiplier(tt.weaponType, tt.className)
-			
+
 			if tt.expectError {
 				if err == nil {
 					t.Errorf("GetWeaponTypeMultiplier(%s, %s) expected error but got none",
@@ -280,7 +280,7 @@ func TestGetWeaponTypeMultiplier(t *testing.T) {
 // Benchmark tests for performance
 func BenchmarkCalculateBaseDamage(b *testing.B) {
 	calc := NewAttackCalculator()
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		calc.CalculateBaseDamage(1000, 500)
@@ -289,7 +289,7 @@ func BenchmarkCalculateBaseDamage(b *testing.B) {
 
 func BenchmarkCalculateCriticalDamage(b *testing.B) {
 	calc := NewAttackCalculator()
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		calc.CalculateCriticalDamage(1000, 1.5)

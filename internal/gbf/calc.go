@@ -19,15 +19,15 @@ func (c *AttackCalculator) CalculateBaseDamage(attack int, defense int) int {
 	if attack <= 0 {
 		return 0
 	}
-	
+
 	// Simple damage calculation with defense reduction
 	damage := float64(attack) * (1.0 - float64(defense)/10000.0)
-	
+
 	// Ensure minimum damage of 1
 	if damage < 1 {
 		damage = 1
 	}
-	
+
 	return int(math.Round(damage))
 }
 
@@ -36,7 +36,7 @@ func (c *AttackCalculator) CalculateCriticalDamage(baseDamage int, critMultiplie
 	if baseDamage <= 0 || critMultiplier <= 0 {
 		return baseDamage
 	}
-	
+
 	return int(math.Round(float64(baseDamage) * critMultiplier))
 }
 
@@ -45,7 +45,7 @@ func (c *AttackCalculator) CalculateElementalDamage(baseDamage int, elementalMod
 	if baseDamage <= 0 {
 		return 0
 	}
-	
+
 	return int(math.Round(float64(baseDamage) * elementalModifier))
 }
 
@@ -53,16 +53,16 @@ func (c *AttackCalculator) CalculateElementalDamage(baseDamage int, elementalMod
 type WeaponType string
 
 const (
-	WeaponTypeSword   WeaponType = "sword"
-	WeaponTypeDagger  WeaponType = "dagger"
-	WeaponTypeSpear   WeaponType = "spear"
-	WeaponTypeAxe     WeaponType = "axe"
-	WeaponTypeStaff   WeaponType = "staff"
-	WeaponTypeGun     WeaponType = "gun"
-	WeaponTypeMelee   WeaponType = "melee"
-	WeaponTypeBow     WeaponType = "bow"
-	WeaponTypeHarp    WeaponType = "harp"
-	WeaponTypeKatana  WeaponType = "katana"
+	WeaponTypeSword  WeaponType = "sword"
+	WeaponTypeDagger WeaponType = "dagger"
+	WeaponTypeSpear  WeaponType = "spear"
+	WeaponTypeAxe    WeaponType = "axe"
+	WeaponTypeStaff  WeaponType = "staff"
+	WeaponTypeGun    WeaponType = "gun"
+	WeaponTypeMelee  WeaponType = "melee"
+	WeaponTypeBow    WeaponType = "bow"
+	WeaponTypeHarp   WeaponType = "harp"
+	WeaponTypeKatana WeaponType = "katana"
 )
 
 // IsValidWeaponType checks if the given weapon type is valid
@@ -72,7 +72,7 @@ func IsValidWeaponType(weaponType WeaponType) bool {
 		WeaponTypeStaff, WeaponTypeGun, WeaponTypeMelee, WeaponTypeBow,
 		WeaponTypeHarp, WeaponTypeKatana,
 	}
-	
+
 	for _, validType := range validTypes {
 		if weaponType == validType {
 			return true
@@ -87,7 +87,7 @@ func GetWeaponTypeMultiplier(weaponType WeaponType, className string) (float64, 
 	if !IsValidWeaponType(weaponType) {
 		return 0, fmt.Errorf("invalid weapon type: %s", weaponType)
 	}
-	
+
 	// Simplified multiplier system - in real GBF this would be much more complex
 	baseMultipliers := map[WeaponType]float64{
 		WeaponTypeSword:  1.2,
@@ -101,11 +101,11 @@ func GetWeaponTypeMultiplier(weaponType WeaponType, className string) (float64, 
 		WeaponTypeHarp:   1.0,
 		WeaponTypeKatana: 1.2,
 	}
-	
+
 	multiplier, exists := baseMultipliers[weaponType]
 	if !exists {
 		return 1.0, nil
 	}
-	
+
 	return multiplier, nil
 }

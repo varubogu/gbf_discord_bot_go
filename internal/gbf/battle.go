@@ -17,18 +17,18 @@ const (
 	BattleTypeUBahaHL  BattleType = "ubaha_hl"  // Ultimate Bahamut Hard
 	BattleTypeAkashaHL BattleType = "akasha_hl" // Akasha Hard
 	BattleTypeLuciHL   BattleType = "luci_hl"   // Lucifer Hard
-	
+
 	// Guild War
-	BattleTypeGW       BattleType = "gw"        // Guild War
-	BattleTypeGWNM     BattleType = "gw_nm"     // Guild War Nightmare
-	
+	BattleTypeGW   BattleType = "gw"    // Guild War
+	BattleTypeGWNM BattleType = "gw_nm" // Guild War Nightmare
+
 	// Events
-	BattleTypeEvent    BattleType = "event"     // Event raids
-	BattleTypeEventHL  BattleType = "event_hl"  // Event High Level
-	
+	BattleTypeEvent   BattleType = "event"    // Event raids
+	BattleTypeEventHL BattleType = "event_hl" // Event High Level
+
 	// Others
-	BattleTypeTrain    BattleType = "train"     // Training rooms
-	BattleTypeCustom   BattleType = "custom"    // Custom battles
+	BattleTypeTrain  BattleType = "train"  // Training rooms
+	BattleTypeCustom BattleType = "custom" // Custom battles
 )
 
 // BattleInfo represents information about a specific battle
@@ -54,10 +54,10 @@ func NewBattleManager() *BattleManager {
 	bm := &BattleManager{
 		battles: make(map[string]*BattleInfo),
 	}
-	
+
 	// Initialize default battles
 	bm.initializeDefaultBattles()
-	
+
 	return bm
 }
 
@@ -135,7 +135,7 @@ func (bm *BattleManager) initializeDefaultBattles() {
 			IsActive:    false, // Activated during GW periods
 		},
 	}
-	
+
 	for _, battle := range defaultBattles {
 		battle.CreatedAt = time.Now()
 		bm.battles[battle.ID] = battle
@@ -178,7 +178,7 @@ func (bm *BattleManager) AddBattle(battle *BattleInfo) error {
 	if battle.ID == "" {
 		return fmt.Errorf("battle ID cannot be empty")
 	}
-	
+
 	battle.CreatedAt = time.Now()
 	bm.battles[strings.ToLower(battle.ID)] = battle
 	return nil
@@ -189,7 +189,7 @@ func (bm *BattleManager) UpdateBattle(id string, battle *BattleInfo) error {
 	if _, exists := bm.battles[strings.ToLower(id)]; !exists {
 		return fmt.Errorf("battle not found: %s", id)
 	}
-	
+
 	battle.ID = strings.ToLower(id)
 	bm.battles[battle.ID] = battle
 	return nil
@@ -200,7 +200,7 @@ func (bm *BattleManager) RemoveBattle(id string) error {
 	if _, exists := bm.battles[strings.ToLower(id)]; !exists {
 		return fmt.Errorf("battle not found: %s", id)
 	}
-	
+
 	delete(bm.battles, strings.ToLower(id))
 	return nil
 }
@@ -211,7 +211,7 @@ func (bm *BattleManager) SetBattleActive(id string, active bool) error {
 	if !exists {
 		return fmt.Errorf("battle not found: %s", id)
 	}
-	
+
 	battle.IsActive = active
 	return nil
 }
@@ -223,7 +223,7 @@ func IsValidBattleType(battleType BattleType) bool {
 		BattleTypeAkashaHL, BattleTypeLuciHL, BattleTypeGW, BattleTypeGWNM,
 		BattleTypeEvent, BattleTypeEventHL, BattleTypeTrain, BattleTypeCustom,
 	}
-	
+
 	for _, validType := range validTypes {
 		if battleType == validType {
 			return true
@@ -238,7 +238,7 @@ func FormatBattleInfo(battle *BattleInfo) string {
 	if battle.IsActive {
 		status = "🟢 Active"
 	}
-	
+
 	return fmt.Sprintf("**%s** (Level %d)\n"+
 		"Type: %s | Min Rank: %d | Max Players: %d\n"+
 		"Status: %s\n"+

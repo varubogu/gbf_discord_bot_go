@@ -7,8 +7,8 @@ import (
 
 // AdminCommand handles admin command functionality
 type AdminCommand struct {
-	logger         *log.Logger
-	controlRoleID  string
+	logger          *log.Logger
+	controlRoleID   string
 	controlRoleName string
 }
 
@@ -41,7 +41,7 @@ func (a *AdminCommand) HandleReloadPrefixCommand(s *discordgo.Session, m *discor
 
 	// Perform reload operation
 	result := a.performReload(logger)
-	
+
 	_, err := s.ChannelMessageSend(m.ChannelID, result)
 	if err != nil {
 		logger.WithError(err).Error("Failed to send reload response")
@@ -101,7 +101,7 @@ func (a *AdminCommand) HandleStatusPrefixCommand(s *discordgo.Session, m *discor
 	logger := a.logger.WithDiscordContext(m.GuildID, m.ChannelID, m.Author.ID).WithCommand("status")
 
 	embed := a.buildStatusEmbed()
-	
+
 	_, err := s.ChannelMessageSendEmbed(m.ChannelID, embed)
 	if err != nil {
 		logger.WithError(err).Error("Failed to send status response")
@@ -198,13 +198,13 @@ func (a *AdminCommand) checkMemberRoles(s *discordgo.Session, guildID string, me
 // performReload performs the actual reload operation
 func (a *AdminCommand) performReload(logger *log.Logger) string {
 	logger.Info("Performing bot reload operation")
-	
+
 	// In a real implementation, this would:
 	// - Reload configuration
 	// - Refresh external connections
 	// - Update command registrations
 	// - Clear caches
-	
+
 	// For now, simulate a successful reload
 	return "✅ Bot components reloaded successfully!"
 }
