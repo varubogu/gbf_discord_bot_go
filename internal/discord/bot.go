@@ -147,11 +147,11 @@ func (b *Bot) registerSlashCommands() error {
 	}
 
 	for _, command := range commands {
-		_, err := b.session.ApplicationCommandCreate(b.session.State.User.ID, b.config.TestGuildID, command)
+		_, err := b.session.ApplicationCommandCreate(b.session.State.User.ID, "", command)
 		if err != nil {
 			return fmt.Errorf("failed to create slash command %s: %w", command.Name, err)
 		}
-		b.logger.Info("Registered slash command", "command", command.Name, "guild", b.config.TestGuildID)
+		b.logger.Info("Registered slash command", "command", command.Name, "global", true)
 	}
 
 	return nil
