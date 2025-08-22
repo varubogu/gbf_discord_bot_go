@@ -13,6 +13,20 @@ type Config struct {
 
 	// Logging settings (optional)
 	LogLevel string
+
+	// Database settings (required)
+	DBHost     string
+	DBUser     string
+	DBPassword string
+	DBName     string
+	DBPort     string
+
+	// Test environment settings (optional)
+	TestDiscordToken string
+	TestDBHost       string
+	TestDBUser       string
+	TestDBPassword   string
+	TestDBDatabase   string
 }
 
 // Load reads configuration from environment variables and validates required fields
@@ -20,6 +34,20 @@ func Load() (*Config, error) {
 	config := &Config{
 		DiscordToken: os.Getenv("DISCORD_TOKEN"),
 		LogLevel:     getEnvWithDefault("LOG_LEVEL", "info"),
+
+		// Database settings
+		DBHost:     getEnvWithDefault("DB_HOST", "localhost"),
+		DBUser:     getEnvWithDefault("DB_USER", ""),
+		DBPassword: getEnvWithDefault("DB_PASSWORD", ""),
+		DBName:     getEnvWithDefault("DB_NAME", ""),
+		DBPort:     getEnvWithDefault("DB_PORT", "5432"),
+
+		// Test environment settings
+		TestDiscordToken: os.Getenv("TEST_DISCORD_TOKEN"),
+		TestDBHost:       getEnvWithDefault("TEST_DBHOST", "localhost"),
+		TestDBUser:       getEnvWithDefault("TEST_DBUSER", ""),
+		TestDBPassword:   getEnvWithDefault("TEST_DBPASSWORD", ""),
+		TestDBDatabase:   getEnvWithDefault("TEST_DBDATABASE", ""),
 	}
 
 	// Validate required fields
