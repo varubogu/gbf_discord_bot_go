@@ -98,29 +98,15 @@ func TestLoad_LogLevelValidation(t *testing.T) {
 func TestLoad_OptionalFields(t *testing.T) {
 	// Save and restore env vars
 	originalToken := os.Getenv("DISCORD_TOKEN")
-	originalGBFBase := os.Getenv("GBF_API_BASE")
-	originalGBFKey := os.Getenv("GBF_API_KEY")
 	defer func() {
 		if originalToken != "" {
 			_ = os.Setenv("DISCORD_TOKEN", originalToken)
 		} else {
 			_ = os.Unsetenv("DISCORD_TOKEN")
 		}
-		if originalGBFBase != "" {
-			_ = os.Setenv("GBF_API_BASE", originalGBFBase)
-		} else {
-			_ = os.Unsetenv("GBF_API_BASE")
-		}
-		if originalGBFKey != "" {
-			_ = os.Setenv("GBF_API_KEY", originalGBFKey)
-		} else {
-			_ = os.Unsetenv("GBF_API_KEY")
-		}
 	}()
 
 	_ = os.Setenv("DISCORD_TOKEN", "test_token")
-	_ = os.Setenv("GBF_API_BASE", "https://example.com")
-	_ = os.Setenv("GBF_API_KEY", "test_key")
 
 	_, err := Load()
 	if err != nil {

@@ -61,8 +61,6 @@ cp .env.example .env
 | 変数名 | デフォルト | 説明 |
 |--------|------------|------|
 | `LOG_LEVEL` | `info` | ログレベル（debug/info/warn/error） |
-| `GBF_API_BASE` | - | GBF API ベースURL |
-| `GBF_API_KEY` | - | GBF API キー |
 | `TEST_GUILD_ID` | - | テスト用ギルドID（開発時） |
 | `TEST_CHANNEL_ID` | - | テスト用チャンネルID（開発時） |
 
