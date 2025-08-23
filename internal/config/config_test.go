@@ -122,7 +122,7 @@ func TestLoad_DatabaseSettings(t *testing.T) {
 	originalDBPassword := os.Getenv("DB_PASSWORD")
 	originalDBName := os.Getenv("DB_NAME")
 	originalDBPort := os.Getenv("DB_PORT")
-	
+
 	defer func() {
 		if originalToken != "" {
 			_ = os.Setenv("DISCORD_TOKEN", originalToken)
@@ -200,7 +200,8 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 	originalTestDBUser := os.Getenv("TEST_DBUSER")
 	originalTestDBPassword := os.Getenv("TEST_DBPASSWORD")
 	originalTestDBDatabase := os.Getenv("TEST_DBDATABASE")
-	
+	originalTestDBPort := os.Getenv("TEST_DB_PORT")
+
 	defer func() {
 		if originalToken != "" {
 			_ = os.Setenv("DISCORD_TOKEN", originalToken)
@@ -212,6 +213,7 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 		restoreEnv("TEST_DBUSER", originalTestDBUser)
 		restoreEnv("TEST_DBPASSWORD", originalTestDBPassword)
 		restoreEnv("TEST_DBDATABASE", originalTestDBDatabase)
+		restoreEnv("TEST_DB_PORT", originalTestDBPort)
 	}()
 
 	_ = os.Setenv("DISCORD_TOKEN", "test_token")
@@ -223,6 +225,7 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 		_ = os.Unsetenv("TEST_DBUSER")
 		_ = os.Unsetenv("TEST_DBPASSWORD")
 		_ = os.Unsetenv("TEST_DBDATABASE")
+		_ = os.Unsetenv("TEST_DB_PORT")
 
 		cfg, err := Load()
 		if err != nil {
@@ -231,6 +234,9 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 
 		if cfg.TestDBHost != "localhost" {
 			t.Errorf("Expected default TestDBHost to be 'localhost', got %q", cfg.TestDBHost)
+		}
+		if cfg.TestDBPort != "5432" {
+			t.Errorf("Expected default TestDBPort to be '5432', got %q", cfg.TestDBPort)
 		}
 		if cfg.TestDiscordToken != "" {
 			t.Errorf("Expected default TestDiscordToken to be empty, got %q", cfg.TestDiscordToken)
@@ -243,6 +249,7 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 		_ = os.Setenv("TEST_DBUSER", "test_user")
 		_ = os.Setenv("TEST_DBPASSWORD", "test_pass")
 		_ = os.Setenv("TEST_DBDATABASE", "test_db")
+		_ = os.Setenv("TEST_DB_PORT", "3306")
 
 		cfg, err := Load()
 		if err != nil {
@@ -263,6 +270,9 @@ func TestLoad_TestEnvironmentSettings(t *testing.T) {
 		}
 		if cfg.TestDBDatabase != "test_db" {
 			t.Errorf("Expected TestDBDatabase to be 'test_db', got %q", cfg.TestDBDatabase)
+		}
+		if cfg.TestDBPort != "3306" {
+			t.Errorf("Expected TestDBPort to be '3306', got %q", cfg.TestDBPort)
 		}
 	})
 }

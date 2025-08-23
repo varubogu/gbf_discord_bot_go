@@ -27,6 +27,7 @@ type Config struct {
 	TestDBUser       string
 	TestDBPassword   string
 	TestDBDatabase   string
+	TestDBPort       string
 }
 
 // Load reads configuration from environment variables and validates required fields
@@ -48,6 +49,7 @@ func Load() (*Config, error) {
 		TestDBUser:       getEnvWithDefault("TEST_DBUSER", ""),
 		TestDBPassword:   getEnvWithDefault("TEST_DBPASSWORD", ""),
 		TestDBDatabase:   getEnvWithDefault("TEST_DBDATABASE", ""),
+		TestDBPort:       getEnvWithDefault("TEST_DB_PORT", "5432"),
 	}
 
 	// Validate required fields
